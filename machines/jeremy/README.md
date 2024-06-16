@@ -1,5 +1,7 @@
 # Machine: Jerry
 
+Date: 2024-06-14
+
 ## Overview
 
 This write-up details my approach to compromising the "Jerry" machine on Hack the Box. The Jerry machine is a Windows Server 2012 R2 system running an Apache Tomcat server. Below are the steps I followed to successfully exploit the machine and obtain the necessary flags.
