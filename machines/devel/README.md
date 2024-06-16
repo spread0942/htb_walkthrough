@@ -1,5 +1,7 @@
 # Machine: Devel
 
+Date: 2024-06-13
+
 ## Overview
 
 This write-up details my approach to compromising the "Devel" machine on Hack the Box. The Devel machine is a Windows 7 Enterprise system running an IIS web server and an FTP server with anonymous login enabled. Below are the steps I followed to successfully exploit the machine and obtain the necessary flags.
