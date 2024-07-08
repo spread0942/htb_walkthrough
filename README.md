@@ -11,6 +11,9 @@ The primary purpose of this repository is to document my problem-solving process
 * README.md: This file, explaining the purpose and structure of the repository.
 * machines/: This directory contains subdirectories for each machine I've successfully hacked.
     * Machine-Name/: Each subdirectory includes detailed write-ups, scripts, and any other relevant files.
+* tracks/: This directory contains subdirectories for each track I've successfully hacked.
+    * Track-Name/: Each subdirectory includes detailed write-ups, scripts, and any other relevant files.
+		* Machine-Name/: Each subdirectory includes detailed write-ups, scripts, and any other relevant files.
 
 ## Usage
 
