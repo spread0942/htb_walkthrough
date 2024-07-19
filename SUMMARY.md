@@ -1,0 +1,16 @@
+# Table of contents
+
+* [Hack the Box Write-ups](README.md)
+* [machines](machines/README.md)
+  * [Lab Academy](machines/academy/README.md)
+  * [Machine: Devel](machines/devel/README.md)
+  * [Grandpa](machines/grandpa/README.md)
+  * [Machine: Nibbles](machines/nibbles/README.md)
+  * [Optimum](machines/optimum/README.md)
+* [tracks](tracks/README.md)
+  * [beginner\_track](tracks/beginner\_track/README.md)
+    * [Machine: Blue](tracks/beginner\_track/blue/README.md)
+    * [Find The Easy Pass](tracks/beginner\_track/find\_the\_easy\_pass/README.md)
+    * [Machine: Jerry](tracks/beginner\_track/jerry/README.md)
+    * [Machine: Lame](tracks/beginner\_track/lame/README.md)
+    * [Netmon](tracks/beginner\_track/netmon/README.md)
