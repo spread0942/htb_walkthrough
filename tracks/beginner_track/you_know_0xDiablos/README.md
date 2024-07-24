@@ -242,7 +242,7 @@ Boom!
 For automation, I wrote a Python script located in the this repo called **yesIknow.py**:
 
 ```bash
-└─# python3 yesIknow.py 83.136.252.57 32521
+└─# python3 yesIknow.py <IP> <PORT>
 [+] Socket connected
 b'You know who are 0xDiablos: \n'
 [+] Payload sent
