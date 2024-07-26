@@ -14,3 +14,4 @@
     * [Machine: Jerry](tracks/beginner\_track/jerry/README.md)
     * [Machine: Lame](tracks/beginner\_track/lame/README.md)
     * [Netmon](tracks/beginner\_track/netmon/README.md)
+    * [You know 0xDiablos](tracks/beginner\_track/you_know_0xDiablos/README.md)
