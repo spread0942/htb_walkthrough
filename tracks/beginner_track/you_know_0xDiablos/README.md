@@ -239,7 +239,7 @@ HTB{...}
 
 Boom!
 
-For automation, I wrote a Python script located in the this repo called **yesIknow.py** (probably you won't get the flag at the first time, if you don't get the flag run it one more times):
+For automation, I wrote a Python script located in the this repo called [yesIknow.py](./yesIknow.py) (probably you won't get the flag at the first time, if you don't get the flag run it one more times):
 
 ```bash
 └─# python3 yesIknow.py <IP> <PORT>
