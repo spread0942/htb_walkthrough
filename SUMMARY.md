@@ -15,3 +15,4 @@
     * [Machine: Lame](tracks/beginner\_track/lame/README.md)
     * [Netmon](tracks/beginner\_track/netmon/README.md)
     * [You know 0xDiablos](tracks/beginner\_track/you_know_0xDiablos/README.md)
+    * [Weak RSA](tracks/beginner\_track/weak_rsa/README.md)
