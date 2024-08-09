@@ -11,7 +11,7 @@ if __name__ == '__main__':
     try:
         ENDPOINT = 'http://under.htb:59080' # change it
 
-        # register reques
+        # register request
         data = {'username': 'p', 'password': 'p', 'register': 'Register'}
         response = requests.post(f'{ENDPOINT}/auth', data=data)
         
