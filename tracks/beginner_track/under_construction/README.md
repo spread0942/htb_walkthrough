@@ -131,7 +131,7 @@ Regular Security Audits: Regularly audit code for vulnerabilities, especially in
 
 ## References
 
-* [HackTricks](https://book.hacktricks.xyz/pentesting-web/hacking-jwt-json-web-tokens#change-the-algorithm-rs256-asymmetric-to-hs256-symmetric-cve-2016-5431-cve-2016-10555) and the [Pentester Academy](https://blog.pentesteracademy.com/hacking-jwt-tokens-verification-key-mismanagement-iv-582601f9d8ac)
+* [HackTricks](https://book.hacktricks.xyz/pentesting-web/hacking-jwt-json-web-tokens#change-the-algorithm-rs256-asymmetric-to-hs256-symmetric-cve-2016-5431-cve-2016-10555)
 * [Pentester Academy](https://blog.pentesteracademy.com/hacking-jwt-tokens-verification-key-mismanagement-iv-582601f9d8ac)
 * [jwt.io](https://jwt.io/)
 * [jwt_tool.py](https://github.com/ticarpi/jwt_tool)
