@@ -9,3 +9,5 @@
     * [Netmon](beginner\_track/netmon/README.md)
     * [Under Construction](beginner\_track/under_construction/README.md)
     * [Blue](beginner\_track/blue/README.md)
+ * [intro_to_dante](intro_to_dante/README.md)
+    * [Emdee five for live](intro_to_dante/emdee_five_for_live/README.md)
