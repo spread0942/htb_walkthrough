@@ -5,7 +5,7 @@ import hashlib
 
 
 if __name__ == '__main__':
-    url = 'http://94.237.59.63:48408/'
+    url = 'http://94.237.59.63:48408/' # change here
 
     try:
         session = requests.Session()
