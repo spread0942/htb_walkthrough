@@ -70,7 +70,7 @@ hashcat -m 500 <password_file> /usr/share/wordlists/rockyou.txt
 
 ### Cisco Type 7:
 
-The other two passwords were Cisco Type 7 encrypted, which I decrypted using an online tool: Cisco Password Cracker.
+The other two passwords were Cisco Type 7 encrypted, which I decrypted using an online tool: [Cisco Password Cracker](https://www.ifm.net.nz/cookbooks/passwordcracker.html).
 
 Decrypted passwords:
 
