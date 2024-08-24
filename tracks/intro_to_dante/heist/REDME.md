@@ -88,7 +88,7 @@ rpcclient -U "hazard" --password="stealth1agent" <target>
 
 ## User Enumeration:
 
-To enumerate users, I used a script that cycles through possible SIDs:
+To enumerate users, I used a script found at [Hack tricks - rpcclient enumeration](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration), that cycles through possible SIDs:
 
 ```bash
 for i in {0..1050}; do 
