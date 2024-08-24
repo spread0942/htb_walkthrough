@@ -123,7 +123,7 @@ Get-Process | Where-Object { $_.ProcessName -eq "firefox" }
 
 ### Dumping Firefox Memory
 
-Using `procdump`, I dumped the Firefox process:
+Using [procdump](https://learn.microsoft.com/en-us/sysinternals/downloads/procdump), I dumped the Firefox process:
 
 ```powershell
 .\procdump.exe 6696 -accepteula
