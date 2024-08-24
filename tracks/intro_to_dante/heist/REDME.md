@@ -44,9 +44,9 @@ Navigating to the web server on port 80 presented a login page. The page allowed
 Logging in as a guest provided some valuable information:
 
 Users:
-* admin
-* rout3r
-* hazard
+* `admin`
+* `rout3r`
+* `hazard`
 
 Configuration File:
 
@@ -56,9 +56,9 @@ Configuration File:
 
 The configuration file provided three encrypted passwords:
 
-* $1$pdQG$o8nrSzsGXeaduXrjlvKc91 (MD5 hash)
-* 0242114B0E143F015F5D1E161713 (Cisco Type 7)
-* 02375012182C1A1D751618034F36415408 (Cisco Type 7)
+* `$1$pdQG$o8nrSzsGXeaduXrjlvKc91` (MD5 hash)
+* `0242114B0E143F015F5D1E161713` (Cisco Type 7)
+* `02375012182C1A1D751618034F36415408` (Cisco Type 7)
 
 ### MD5 Hash:
 
@@ -73,9 +73,10 @@ hashcat -m 500 <password_file> /usr/share/wordlists/rockyou.txt
 The other two passwords were Cisco Type 7 encrypted, which I decrypted using an online tool: Cisco Password Cracker.
 
 Decrypted passwords:
-* stealth1agent
-* $uperP@ssword
-* Q4)sJu\Y8qz*A3?d3.
+
+* `stealth1agent`
+* `$uperP@ssword`
+* `Q4)sJu\Y8qz*A3?d`
 
 ## Initial Access via RPC
 
@@ -102,7 +103,7 @@ This revealed several new users, including:
 
 ## Gaining User Access via WinRM
 
-With the `Chase` credentials (`Q4)sJu\Y8qz*A3?d`), I connected to the target using WinRM:
+With the `Chase` credentialsn, I connected to the target using WinRM:
 
 ```bash
 evil-winrm -i <target> -u chase -p "Q4)sJu\Y8qz*A3?d"
