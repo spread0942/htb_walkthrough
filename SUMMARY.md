@@ -19,6 +19,6 @@
     * [Blue](tracks/beginner\_track/blue/README.md)
   * [intro_to_dante](tracks/intro_to_dante/README.md)
     * [Emdee five for live](tracks/intro_to_dante/emdee_five_for_live/README.md)
-    * [Heist](tracks%2Fintro_to_dante%2Fheist%2FREDME.md
+    * [Heist](tracks/intro_to_dante/heist/REDME.md)
     
 
