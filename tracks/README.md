@@ -1,6 +1,6 @@
-# tracks
+# Tracks
 
-* [beginner\_track](beginner\_track/README.md)
+* [Beginner Tracks](beginner\_track/README.md)
     * [Lame](beginner\_track/lame/README.md)
     * [Find The Easy Pass](beginner\_track/find\_the\_easy\_pass/README.md)
     * [Weak RSA](beginner\_track/weak_rsa/README.md)
@@ -9,6 +9,7 @@
     * [Netmon](beginner\_track/netmon/README.md)
     * [Under Construction](beginner\_track/under_construction/README.md)
     * [Blue](beginner\_track/blue/README.md)
- * [intro_to_dante](intro_to_dante/README.md)
+ * [Intro to Dante](intro_to_dante/README.md)
     * [Emdee five for live](intro_to_dante/emdee_five_for_live/README.md)
     * [Heist](intro_to_dante/heist/README.md)
+    * [Open Admin](intro_to_dante/open_admin/README.md)
