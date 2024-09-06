@@ -1,4 +1,4 @@
-# intro_to_dante
+# Intro to Dante
 
   * [Emdee five for live](emdee_five_for_live/README.md)
   * [Heist](heist/README.md)
