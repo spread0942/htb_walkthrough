@@ -116,3 +116,9 @@ Inside the **customers.sql** file, I found a **Base58-encoded** value. After dec
 - Sensitive data, including **credit card information**, was exfiltrated from the target’s system.
 
 ---
+
+## Resources
+
+* [CyberChef](https://gchq.github.io/CyberChef/)
+
+---
