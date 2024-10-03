@@ -65,7 +65,7 @@ I could access the `Data`, `Secure$` and `Users` shares without a password. Insi
 Administrator, C.Smith, L.Frost, R.Thompson, TempUser
 ```
 
-In the `Shared\Templates\HR\` folder, I discovered the following TempUser credentials:
+In the `\\HTB-NEST\Data\Shared\Templates\HR\` folder, I discovered the following TempUser credentials:
 
 ```
 Username: TempUser
