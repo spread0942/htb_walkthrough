@@ -23,5 +23,6 @@
     * [Open Admin](tracks/intro_to_dante/open_admin/README.md)
     * [Market Dump](tracks/intro_to_dante/market_dump/README.md)
     * [Nest](tracks/intro_to_dante/nest/README.md)
+    * [Curling](tracks/intro_to_dante/curling/README.md)
     
 
