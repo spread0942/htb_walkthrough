@@ -1,4 +1,4 @@
-# beginner\_track
+# Beginner Track
 
   * [Lame](lame/README.md)
   * [Find The Easy Pass](find\_the\_easy\_pass/README.md)
