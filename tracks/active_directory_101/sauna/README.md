@@ -87,7 +87,7 @@ The HTTP service revealed a basic web page hosted on Microsoft IIS. I explored t
 * http://sauna.htb/single.html: Found usernames. Stored them in a file called users.
 * http://sauna.htb/about.html: Identified team members and added them to the users file.
 
-![image](https://github.com/user-attachments/assets/05d39779-7294-4709-8341-c5ba5b7c859a)
+![image](https://github.com/user-attachments/assets/192dc48b-2e61-4809-bf0a-1d4cc842748b)
 
 ---
 
