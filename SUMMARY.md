@@ -25,6 +25,7 @@
     * [Nest](tracks/intro_to_dante/nest/README.md)
     * [Curling](tracks/intro_to_dante/curling/README.md)
   * [Active Directory 101](tracks/active_directory_101/README.md)
-    * [Forest](tracks/active_directory_101/forest/README.md) 
+    * [Forest](tracks/active_directory_101/forest/README.md)
+    * [Sauna](tracks/active_directory_101/sauna/README.md) 
     
 
