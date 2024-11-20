@@ -1,3 +1,0 @@
-# Active Directory 101
-
-***
