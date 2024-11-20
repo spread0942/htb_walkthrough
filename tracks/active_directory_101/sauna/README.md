@@ -128,7 +128,7 @@ SMB required authentication and could not be enumerated anonymously.
 
 ### 1. User Enumeration and AS-REP Roasting
 
-Using usernames from earlier, I created a custom username wordlist ([GitHub - CustListler](https://github.com/spread0942/CustListler)). Then, I used `GetNPUsers.py` to identify accounts vulnerable to AS-REP Roasting:
+Using team worker names from earlier, I created a python script [GitHub - CustListler](https://github.com/spread0942/CustListler) that help me create a custom username wordlist. Then, I used `GetNPUsers.py` to identify accounts vulnerable to AS-REP Roasting:
 
 ```bash
 GetNPUsers.py EGOTISTICAL-BANK.LOCAL/ -usersfile users -format hashcat -outputfile ASREProastables.txt -dc-ip 10.10.10.175
