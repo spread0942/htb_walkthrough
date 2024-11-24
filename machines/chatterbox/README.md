@@ -189,4 +189,3 @@ Using the administrator credentials, I logged in and retrieved the **root flag**
 
 ---
 
-Let me know if you'd like to adjust or expand any section!
