@@ -8,7 +8,7 @@
   * [Machine: Nibbles](machines/nibbles/README.md)
   * [Optimum](machines/optimum/README.md)
   * [Chatterbox](machines/chatterbox/README.md)
-  * [Chatterbox](machines/jeeves/README.md)
+  * [Jeeves](machines/jeeves/README.md)
 * [Tracks](tracks/README.md)
   * [Beginner track](tracks/beginner\_track/README.md)
     * [Lame](tracks/beginner\_track/lame/README.md)
