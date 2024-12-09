@@ -1,7 +1,7 @@
-### **Access - HackTheBox Lab**
+# **Access - HackTheBox Lab**
 
-#### **Date:** 2024-12-08  
-#### **Target:** `10.10.10.98`  
+**Date:** 2024-12-08  
+**Target:** `10.10.10.98`  
 
 ---
 
