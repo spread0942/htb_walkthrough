@@ -3,8 +3,6 @@
 **Date:** 2024-12-08  
 **Target:** `10.10.10.98`  
 
----
-
 ## **Scope**
 
 The goal is to enumerate the target, identify vulnerabilities, gain access, and escalate privileges.
