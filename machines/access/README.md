@@ -116,21 +116,21 @@ The goal is to enumerate the target, identify vulnerabilities, gain access, and 
    ```
    This extracted a `.pst` file (Microsoft Outlook Data File).
 
-5. **Converted pst file to mbox**
+5. **Converted pst file to mbox**     
    To convert a pst file to mbox I ran:
    ```bash
    readpst "Access Control.pst"
    ```
-6. **Gain Access**
+6. **Gain Access**     
    Reading the mbox file I found the user credential.
    I used telnet to test them and I gain access on the target machine, obtaining the user flag.
 
-7. **Automate**
+7. **Automate**  
    You can retrive the user credential easily by running the following script: [access.sh](https://github.com/spread0942/htb_walkthrough/blob/main/machines/access/access.sh)
    ```bash
    wget https://raw.githubusercontent.com/spread0942/htb_walkthrough/refs/heads/main/machines/access/access.sh
    chmod 755 access.sh
-   ./access.sh
+   ./access.sh 10.10.10.98
    ```
 
 ---
