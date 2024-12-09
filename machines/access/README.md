@@ -125,6 +125,14 @@ The goal is to enumerate the target, identify vulnerabilities, gain access, and 
    Reading the mbox file I found the user credential.
    I used telnet to test them and I gain access on the target machine, obtaining the user flag.
 
+7. **Automate**
+   You can retrive the user credential easily by running the following script: [access.sh](https://github.com/spread0942/htb_walkthrough/blob/main/machines/access/access.sh)
+   ```bash
+   wget https://raw.githubusercontent.com/spread0942/htb_walkthrough/refs/heads/main/machines/access/access.sh
+   chmod 755 access.sh
+   ./access.sh
+   ```
+
 ---
 
 ## **Privilege Escalation**
