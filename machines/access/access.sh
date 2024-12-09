@@ -1,5 +1,5 @@
 #!/bin/bash
-# Clone it locally
+# Clone it locally: `wget https://raw.githubusercontent.com/spread0942/htb_walkthrough/refs/heads/main/machines/access/access.sh`
 # Change the permission `chmod 755 access.sh`
 # Run it: `./access.sh`
 
