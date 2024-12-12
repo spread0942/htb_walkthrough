@@ -1,58 +1,95 @@
-# ARCTIC
+# Arctic - Hack The Box Walkthrough
 
-Date: 2024-12-12
-Target: `10.10.10.11`
+**Target IP**: `10.10.10.11`  
+**Hostname**: `arctic.htb`  
 
-Save in a target file:
+---
 
+## Initial Setup
+
+### Preparing the Environment
+1. Store the target IP in a file for reuse:
+   ```bash
+   echo 10.10.10.11 > target
+   ```
+2. Add the target to your `/etc/hosts` file for easier navigation:
+   ```
+   10.10.10.11   arctic.htb
+   ```
+
+---
+
+## Enumeration
+
+### Full Port Scan
+I conducted a full TCP port scan to identify open ports:
 ```bash
-echo 10.10.10.11 > target
+nmap -p- -v -iL target -oN nmap/full_tcp_scan.txt
 ```
 
-Added also in the hosts file as `artic.htb`.
+**Open Ports**:
+- 135/tcp - MSRPC
+- 8500/tcp - HTTP (ColdFusion)
+- 49154/tcp - MSRPC  
 
-## Gain Access
-
-### Port Scan Enumeration
-
-I run a full tcp ports scan:
-
+### Service Enumeration
+Next, I performed a targeted scan on the discovered ports to gather detailed information:
 ```bash
-nmap -p- -v -iL=target -oN nmap/tcp_ports.txt
+nmap -p135,8500,49154 -v -iL target -A -oN nmap/target_ports_scan.txt -oX nmap/target_ports_scan.xml
 ```
 
-I discovered the following open ports:
+Unfortunately, the Nmap scan provided limited details. Testing ports manually with `telnet` and `nc` also yielded no additional information.
 
-* `135`
-* `8500`
-* `49154`
+---
 
-Performing an aggressive ports scan:
+## HTTP on Port 8500
 
+Accessing the web server at `http://arctic.htb:8500/` revealed an administrative login page located at:  
+`http://arctic.htb:8500/CFIDE/administrator/`
+
+The page identified the software as **Adobe ColdFusion 8**.
+
+![image](https://github.com/user-attachments/assets/965b6200-8bc6-4a63-94c1-deb76a96ca6e)
+
+---
+
+## Exploitation
+
+### Identifying Vulnerability
+I searched for known vulnerabilities in Adobe ColdFusion 8:
 ```bash
-nmap -p135,8500,49154 -v -iL target -A -oN nmap/target_ports.txt -oX nmap/target_ports.txt
-
+searchsploit Adobe ColdFusion 8
 ```
 
-I haven't get any more information.
-I tried to enumerate them with `telnet` and `nc`, but they did't give me any information.
-On the browser I got a web page: `http://artic.htb:8500/`.
+**Result**:
+I discovered an exploit for **ColdFusion 8 Arbitrary File Upload**:  
+```text
+ColdFusion 8 - Arbitrary File Upload | 50057
+```
 
-### HTTP - Port 8500
-
-I found an administrator login page at: `http://artic.htb:8500/CFIDE/administrator/` and its an **Adobe Coldfusion 8**.
-I search for a possibile vulnerability over the internet and I found it, then I used `searchsploit` and I found the same:
-
+I extracted the exploit using:
 ```bash
-searchsploit Adobe Coldfusion 8
 searchsploit -m 50057
 ```
 
 ![image](https://github.com/user-attachments/assets/1fe12b8e-0136-423b-925b-93fe40f8aebd)
 
-I changed some configuration inside the file and I got the shell:
+### Modifying the Exploit
+The exploit script needed configuration changes to target the Arctic machine:
+
+![Screenshot from 2024-12-12 20-53-54](https://github.com/user-attachments/assets/1215ff26-65bb-4934-b60b-99af9f7f9474)
+
+### Obtaining a Shell
+1. Then run the python script:
+   ```bash
+   python3 50057.py
+   ```
 
 ![image](https://github.com/user-attachments/assets/0ad09701-8968-4c4c-9f45-80530f2a3e6b)
+
+**Outcome**: Obtained a reverse shell on the Arctic machine 
+
+---
 
 ## Privilege Escalation
 
@@ -98,10 +135,21 @@ whoami /priv
 
 **Outcome**: Obtained a Meterpreter session with `NT AUTHORITY\SYSTEM` privileges.
 
-***
+---
+
+## Summary
+
+1. Identified **Adobe ColdFusion 8** running on port 8500.
+2. Exploited an **arbitrary file upload vulnerability** to gain a foothold.
+3. Conducted local enumeration and privilege escalation to obtain the root flag.
+
+---
 
 ## Resources
 
-* [Adobe ColdFusion 8 - Remote Command Execution (RCE)](https://www.exploit-db.com/exploits/50057)
+- [Adobe ColdFusion 8 - Remote Command Execution (RCE)](https://www.exploit-db.com/exploits/50057)
+- [JuicyPotato](https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/juicypotato)
+- [Windows Privilege Escalation — Token Impersonation (SeImpersonatePrivilege)](https://usersince99.medium.com/windows-privilege-escalation-token-impersonation-seimpersonateprivilege-364b61017070)
+- [WinPEAS](https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS)
 
-***
+---
