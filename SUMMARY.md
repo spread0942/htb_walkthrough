@@ -10,6 +10,7 @@
   * [Chatterbox](machines/chatterbox/README.md)
   * [Jeeves](machines/jeeves/README.md)
   * [Access](machines/access/README.md)
+  * [Arctic](machines/arctic/README.md)
 * [Tracks](tracks/README.md)
   * [Beginner track](tracks/beginner\_track/README.md)
     * [Lame](tracks/beginner\_track/lame/README.md)
