@@ -80,10 +80,10 @@ The exploit script needed configuration changes to target the Arctic machine:
 ![Screenshot from 2024-12-12 20-53-54](https://github.com/user-attachments/assets/1215ff26-65bb-4934-b60b-99af9f7f9474)
 
 ### Obtaining a Shell
-1. Then run the python script:
-   ```bash
-   python3 50057.py
-   ```
+Then run the python script:
+```bash
+python3 50057.py
+```
 
 ![image](https://github.com/user-attachments/assets/0ad09701-8968-4c4c-9f45-80530f2a3e6b)
 
@@ -141,7 +141,7 @@ whoami /priv
 
 1. Identified **Adobe ColdFusion 8** running on port 8500.
 2. Exploited an **arbitrary file upload vulnerability** to gain a foothold.
-3. Conducted local enumeration and privilege escalation to obtain the root flag.
+3. Used JuicyPotato to escalate privileges to SYSTEM.
 
 ---
 
