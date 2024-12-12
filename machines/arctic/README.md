@@ -43,6 +43,11 @@ On the browser I got a web page: `http://artic.htb:8500/`.
 I found an administrator login page at: `http://artic.htb:8500/CFIDE/administrator/` and its an **Adobe Coldfusion 8**.
 I search for a possibile vulnerability over the internet and I found it, then I used `searchsploit` and I found the same:
 
+```bash
+searchsploit Adobe Coldfusion 8
+searchsploit -m 50057
+```
+
 ![image](https://github.com/user-attachments/assets/1fe12b8e-0136-423b-925b-93fe40f8aebd)
 
 I changed some configuration inside the file and I got the shell:
