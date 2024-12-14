@@ -75,4 +75,6 @@ searchsploit Drupal 7
 Here you can read the CHANGELOG: http://bastard.htb/CHANGELOG.txt .
 Here you can read the README: http://bastard.htb/README.txt .
 
+![image](https://github.com/user-attachments/assets/bd363a40-deab-47b1-95dc-5a3b75cb61f9)
+
 
