@@ -54,3 +54,21 @@ PORT      STATE SERVICE VERSION
 135/tcp   open  msrpc   Microsoft Windows RPC
 49154/tcp open  msrpc   Microsoft Windows RPC
 ```
+
+### Port 80
+
+The port 80 show me a Drupal login.
+You can read the version on nmap or also runngin the command:
+
+```bash
+curl http://bastard.htb | grep "<meta name=\"Generator\" content=\"Drupal"
+```
+
+Then I looking for known vulnerabilities:
+
+```bash
+searchsploit Drupal 7
+```
+
+![image](https://github.com/user-attachments/assets/07d958c6-e0f8-4994-9611-a9497633c627)
+
