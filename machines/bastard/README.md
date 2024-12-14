@@ -61,7 +61,7 @@ The port 80 show me a Drupal login.
 You can read the version on nmap or also runngin the command:
 
 ```bash
-curl http://bastard.htb | grep "<meta name=\"Generator\" content=\"Drupal"
+curl -s http://bastard.htb/CHANGELOG.txt | grep -m2 ""
 ```
 
 Then I looking for known vulnerabilities:
@@ -71,4 +71,8 @@ searchsploit Drupal 7
 ```
 
 ![image](https://github.com/user-attachments/assets/07d958c6-e0f8-4994-9611-a9497633c627)
+
+Here you can read the CHANGELOG: http://bastard.htb/CHANGELOG.txt .
+Here you can read the README: http://bastard.htb/README.txt .
+
 
