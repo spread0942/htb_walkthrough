@@ -182,13 +182,95 @@ In the user directory I found the flag.
 Syteminformation:
 
 ```
-Computer        : BASTARD
-OS              : Windows Server 2008 R2 (6.1 Build 7600).
-Architecture    : x64
-System Language : el_GR
-Domain          : HTB
-Logged On Users : 1
-Meterpreter     : x86/windows
+systeminfo
+
+Host Name:                 BASTARD
+OS Name:                   Microsoft Windows Server 2008 R2 Datacenter 
+OS Version:                6.1.7600 N/A Build 7600
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Server
+OS Build Type:             Multiprocessor Free
+Registered Owner:          Windows User
+Registered Organization:   
+Product ID:                55041-402-3582622-84461
+Original Install Date:     18/3/2017, 7:04:46 ��
+System Boot Time:          18/1/2025, 2:52:09 ��
+System Manufacturer:       VMware, Inc.
+System Model:              VMware Virtual Platform
+System Type:               x64-based PC
+Processor(s):              2 Processor(s) Installed.
+                           [01]: AMD64 Family 25 Model 1 Stepping 1 AuthenticAMD ~2595 Mhz
+                           [02]: AMD64 Family 25 Model 1 Stepping 1 AuthenticAMD ~2595 Mhz
+BIOS Version:              Phoenix Technologies LTD 6.00, 12/11/2020
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume1
+System Locale:             el;Greek
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC+02:00) Athens, Bucharest, Istanbul
+Total Physical Memory:     2.047 MB
+Available Physical Memory: 1.596 MB
+Virtual Memory: Max Size:  4.095 MB
+Virtual Memory: Available: 3.619 MB
+Virtual Memory: In Use:    476 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    HTB
+Logon Server:              N/A
+Hotfix(s):                 N/A
+Network Card(s):           1 NIC(s) Installed.
+                           [01]: Intel(R) PRO/1000 MT Network Connection
+                                 Connection Name: Local Area Connection
+                                 DHCP Enabled:    No
+                                 IP address(es)
+                                 [01]: 10.10.10.9
+```
+
+Listing the privileges I notice the Impersonation one:
+
+```
+C:\inetpub\drupal-7.54>whoami /priv
+whoami /priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name          Description                               State  
+======================= ========================================= =======
+SeChangeNotifyPrivilege Bypass traverse checking                  Enabled
+SeImpersonatePrivilege  Impersonate a client after authentication Enabled
+SeCreateGlobalPrivilege Create global objects                     Enabled
+```
+
+Listing groups:
+
+```
+whoami /groups
+
+GROUP INFORMATION
+-----------------
+
+Group Name                           Type             SID          Attributes                                        
+==================================== ================ ============ ==================================================
+Mandatory Label\High Mandatory Level Label            S-1-16-12288                                                   
+Everyone                             Well-known group S-1-1-0      Mandatory group, Enabled by default, Enabled group
+BUILTIN\Users                        Alias            S-1-5-32-545 Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\SERVICE                 Well-known group S-1-5-6      Group used for deny only                          
+CONSOLE LOGON                        Well-known group S-1-2-1      Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\Authenticated Users     Well-known group S-1-5-11     Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\This Organization       Well-known group S-1-5-15     Mandatory group, Enabled by default, Enabled group
+LOCAL                                Well-known group S-1-2-0      Mandatory group, Enabled by default, Enabled group
+```
+
+Listing users:
+
+```
+net user
+
+User accounts for \\
+
+-------------------------------------------------------------------------------
+Administrator            dimitris                 Guest                    
+The command completed with one or more errors.
 ```
 
 
