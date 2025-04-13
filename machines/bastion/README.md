@@ -116,11 +116,9 @@ Crack NTLM hashes with Hashcat:
 hashcat -m 1000 hashes.txt /usr/share/wordlists/rockyou.txt
 ```
 
----
+### Initial Access
 
-## Initial Access
-
-### SSH Connection
+#### SSH Connection
 Authenticate with obtained credentials:
 ```bash
 ssh L4mpje@bastion.htb
@@ -128,13 +126,17 @@ ssh L4mpje@bastion.htb
 
 You'll got the user flag.
 
+## Resources
+
+* This is another interesting way to mount vhd files: [Mounting VHD file on Kali Linux through remote share](https://medium.com/@klockw3rk/mounting-vhd-file-on-kali-linux-through-remote-share-f2f9542c1f25)
+
 ---
 
 ## ⚙️ Privilege Escalation
 
 **mRemoteNG Credential Extraction**
 
-1. Found mRemoteNG installed in:
+1. Found [mRemoteNG](https://mremoteng.org/) installed in:
 ```shell
 C:\Program Files (x86)\
 ```
@@ -150,7 +152,7 @@ C:\Users\<User>\AppData\Roaming\mRemoteNG\confCons.xml
 
 3. Base64 encoded password was found in the file.
 
-4. Decrypt password using the Python tool:
+4. Decrypt password using the Python tool [mRemoteNG Decrypt](https://github.com/kmahyyg/mRemoteNG-Decrypt):
 
 ```bash
 git clone https://github.com/kmahyyg/mremoteng-decrypt.git
@@ -159,6 +161,12 @@ python3 mremoteng_decrypt.py -s <Base64 string>
 ```
 
 5. Logged in as Administrator using decrypted credentials.
+
+### Resources
+
+* [mRemoteNG](https://mremoteng.org/)
+* [GitHub - mRemoteNG](https://github.com/mRemoteNG/mRemoteNG)
+* [GitHub - mRemoteNG Decrypt](https://github.com/kmahyyg/mRemoteNG-Decrypt)
 
 ---
 
