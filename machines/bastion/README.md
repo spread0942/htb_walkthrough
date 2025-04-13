@@ -65,13 +65,6 @@ smbclient -L \\\\bastion.htb\\ -N
 ```
 
 **Discovered Shares**:
-```
-ADMIN$          - Remote Admin
-Backups         - Potential backup storage
-C$              - Default system share
-IPC$            - Inter-process communication
-```
-
 ![image](https://github.com/user-attachments/assets/ce65f502-3ed9-4113-bab3-5894284dfaca)
 
 ### Accessing Backups Share
