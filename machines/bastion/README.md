@@ -146,6 +146,8 @@ C:\Program Files (x86)\
 C:\Users\<User>\AppData\Roaming\mRemoteNG\confCons.xml
 ```
 
+![Screenshot from 2025-04-13 11-45-57](https://github.com/user-attachments/assets/3b5cf8f9-6d7d-4336-bbce-cde11edeee8c)
+
 3. Base64 encoded password was found in the file.
 
 4. Decrypt password using the Python tool:
