@@ -12,6 +12,7 @@
   * [Access](machines/access/README.md)
   * [Arctic](machines/arctic/README.md)
   * [Bastard](machines/bastard/README.md)
+  * [Bastion](machines/bastion/README.md)
 * [Tracks](tracks/README.md)
   * [Beginner track](tracks/beginner\_track/README.md)
     * [Lame](tracks/beginner\_track/lame/README.md)
