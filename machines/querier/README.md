@@ -93,3 +93,93 @@ Host script results:
 |   3:1:1: 
 |_    Message signing enabled but not required
 ```
+
+## SMB
+
+```bash
+smbclient -L //10.10.10.125
+```
+
+```
+Password for [WORKGROUP\root]:
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+	Reports         Disk      
+Reconnecting with SMB1 for workgroup listing.
+do_connect: Connection to 10.10.10.125 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+Unable to connect with SMB1 -- no workgroup available
+```
+
+```└─# sudo apt install libimage-exiftool-perl
+
+Upgrading:                      
+  libimage-exiftool-perl
+
+Summary:
+  Upgrading: 1, Installing: 0, Removing: 0, Not Upgrading: 2274
+  Download size: 5633 kB
+  Space needed: 3640 kB / 286 GB available
+
+Get:1 http://http.kali.org/kali kali-rolling/main amd64 libimage-exiftool-perl all 13.10+dfsg-1 [5633 kB]
+Fetched 5633 kB in 1s (7480 kB/s)           
+(Reading database ... 473470 files and directories currently installed.)
+Preparing to unpack .../libimage-exiftool-perl_13.10+dfsg-1_all.deb ...
+Unpacking libimage-exiftool-perl (13.10+dfsg-1) over (12.76+dfsg-1) ...
+Setting up libimage-exiftool-perl (13.10+dfsg-1) ...
+Processing triggers for doc-base (0.11.2) ...
+Processing 1 changed doc-base file...
+Processing triggers for man-db (2.12.1-1) ...
+Processing triggers for kali-menu (2023.4.7) ...
+Scanning processes...                                                                                             
+Scanning linux images...                                                                                          
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+                                                                                                                  
+┌──(root㉿vb-kali)-[~/htb/machines/querier]
+└─# exiftool Currency\ Volume\ Report.xlsm 
+ExifTool Version Number         : 13.10
+File Name                       : Currency Volume Report.xlsm
+Directory                       : .
+File Size                       : 12 kB
+File Modification Date/Time     : 2025:04:19 09:27:34-04:00
+File Access Date/Time           : 2025:04:19 09:31:40-04:00
+File Inode Change Date/Time     : 2025:04:19 09:27:34-04:00
+File Permissions                : -rw-r--r--
+File Type                       : XLSM
+File Type Extension             : xlsm
+MIME Type                       : application/vnd.ms-excel.sheet.macroEnabled.12
+Zip Required Version            : 20
+Zip Bit Flag                    : 0x0006
+Zip Compression                 : Deflated
+Zip Modify Date                 : 1980:01:01 00:00:00
+Zip CRC                         : 0x513599ac
+Zip Compressed Size             : 367
+Zip Uncompressed Size           : 1087
+Zip File Name                   : [Content_Types].xml
+Creator                         : Luis
+Last Modified By                : Luis
+Create Date                     : 2019:01:21 20:38:56Z
+Modify Date                     : 2019:01:27 22:21:34Z
+Application                     : Microsoft Excel
+Doc Security                    : None
+Scale Crop                      : No
+Heading Pairs                   : Worksheets, 1
+Titles Of Parts                 : Currency Volume
+Company                         : 
+Links Up To Date                : No
+Shared Doc                      : No
+Hyperlinks Changed              : No
+App Version                     : 16.0300
+```
