@@ -198,6 +198,7 @@ This dump a SQL Connection string and I used to connect on SQL Server:
 
 ```bash
 impacket-mssqlclient reporting@10.10.10.125 -windows-auth
+xp_dirtree C:\\Users
 ```
 
 ---
